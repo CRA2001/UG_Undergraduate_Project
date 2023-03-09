@@ -1,4 +1,5 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="{% url 'mainpage' %}">Logo</a>
+{% load static %}
+<nav class="navbar navbar-expand-lg">
+    <a href="{% url 'mainpage' %}"><img class='logo' src="{% static 'images/logo.png' %}"></a>
     </div>
   </nav>
