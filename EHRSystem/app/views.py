@@ -2,16 +2,16 @@ from django.shortcuts import render
 from django.http import HttpResponse
 
 def index(request):
-    return HttpResponse("Index page")
+    return render(request,'app/mainpage.html')
 
 def patientConsult(request):
-    return HttpResponse("Patient consultation page")
+    return render(request,'app/patientConsult.html')
 
 def inventory(request):
-    return HttpResponse("Inveotry page")
+    return render(request,'app/inventory.html')
 
 def profile(request):
-    return HttpResponse("Profile Page")
+    return render(request,'app/profile.html')
 
 def staff(request):
-    return HttpResponse("Staff page")
+    return render(request,'app/staff.html')
