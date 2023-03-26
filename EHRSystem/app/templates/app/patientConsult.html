@@ -1,4 +1,83 @@
 {% extends 'index.html'%}
 {% block content %}
-<h2> Patient Consultation </h2>
+<style>
+    .col-title{
+        text-align: center;
+    }
+    .patient_attr{
+        text-align: center;
+    }
+    h2{
+        text-align: center;
+    }
+    .title{
+        text-align: center;
+        padding-bottom: 3%;
+        text-decoration: underline;
+    }
+    .homebtn{
+        padding-left: 2%;
+    }
+</style>
+<a href="{% url 'mainpage' %}" class="homebtn"><i class="fa-solid fa-arrow-left"></i> Home</a>
+<div class="container-fluid">
+        <h2 class="title"> Patient Management</h2>
+        <div class="row">
+            <div class="col col-title">
+                <h4>Name</h4>
+            </div>
+            <div class="col col-title">
+                <h4>Sex</h4>
+            </div>
+            <div class="col col-title">
+                <h4>Email</h4>
+            </div>
+            <div class="col col-title">
+                <h4>Phone</h4>
+            </div>
+            <div class="col col-title">
+                <h4>D.O.B</h4>
+            </div>
+            <div class="col col-title">
+                <h4>Ethnicity</h4>
+            </div>
+            <div class="col col-title">
+                <h4>Medical History</h4>
+            </div>
+        </div>
+
+        {% for patient in patients %}
+            <div class="row">
+                <div class="col">
+                    <p class="patient_attr">{{patient.name}}</p>
+                </div>
+                <div class="col">
+                    <p class="patient_attr">{{patient.sex}}</p>
+                </div>
+                <div class="col">
+                    <p class="patient_attr">{{patient.email}}</p>
+                </div>
+                <div class="col">
+                    <p class="patient_attr">{{patient.phone}}</p>
+                </div>
+                <div class="col">
+                    <p class="patient_attr">{{patient.date_of_birth}}</p>
+                </div>
+                <div class="col">
+                    <p class="patient_attr">{{patient.ethnicity}}</p>
+                </div>
+                <div class="col text-center">
+                    <button class="btn btn-default">See Medical History</button>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+
+            <!-- <p>Sex: {{patient.sex}}</p>
+        <p>Email:{{patient.email}}</p>
+        <p>Phone: {{patient.phone}}</p>
+        <p>D.O.B: {{patient.date_of_birth}}</p>
+        <p>Ethnicity: {{patient.ethnicity}}</p>
+        <button>See Medical History</button> -->
 {% endblock content %}
