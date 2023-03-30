@@ -1,0 +1,61 @@
+{% extends 'index.html'%}
+{% block content %}
+<style>
+    .item, .col-heading{
+        text-align: center;
+    }
+    h2{
+        text-align: center;
+    }
+    .title{
+        text-align: center;
+        padding-bottom: 3%;
+        text-decoration: underline;
+    }
+    .homebtn{
+        padding-left: 2%;
+        color: black;
+    }
+
+</style>
+<a href="{% url 'mainpage' %}" class="homebtn"><i class="fa-solid fa-arrow-left"></i> Home</a>
+<div class="container-fluid">
+    <h2 class="title">Pharmacy Inventory</h2>
+    <div class="row">
+        <div class="col col-heading">
+            <p>ID</p>
+        </div>
+        <div class="col col-heading">
+            <p>Name</p>
+        </div>
+        <div class="col col-heading">
+            <p>Description</p>
+        </div>
+        <div class="col col-heading">
+            <p>Expiry Date</p>
+        </div>
+        <div class="col col-heading">
+            <p>Stock</p>
+        </div>
+    </div>
+    {% for drug in drugs %}
+    <div class="row">
+        <div class="col item">
+            <p>{{drug.id}}</p>
+        </div>
+        <div class="col item">
+            <p>{{drug.drug_name}}</p>
+        </div>
+        <div class="col item">
+            <p>{{drug.purpose}}</p>
+        </div>
+        <div class="col item">
+            <p>{{drug.expiry_date}}</p>
+        </div>
+        <div class="col item">
+            <p>{{drug.stock}}</p>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock content %}

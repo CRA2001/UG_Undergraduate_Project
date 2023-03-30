@@ -1,6 +1,51 @@
 {% load static %}
-<nav class="navbar navbar-expand-lg">
-    <a href="{% url 'mainpage' %}"><img class='logo' src="{% static 'images/logo.png' %}"></a>
-    <a href="{% url 'login' %}">Login</a>  
-  </div>
-  </nav>
+  <style>
+    nav{
+        background-color: #002D2B;
+    }
+
+    .logo{
+        width: 80px;
+        height: 80px;
+    }
+    .hello_Text{
+        color:white;
+    }
+    .split{
+        color: white;
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    .login_logout{
+        color: white;
+    }
+  </style>
+
+  <nav class="navbar navbar-expand-md">
+        <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a href="{% url 'mainpage' %}"><img class='logo' src="{% static 'images/logo.png' %}"></a>
+                </li>
+            </ul>
+        </div>
+        <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+            <ul class="navbar-nav ml-auto">
+                {% if request.user.is_authenticated  %}
+                <li class="nav-item">
+                    <p class="hello_Text">Welcome, {{request.user.username}}  </p>
+                </li>
+                <li class="nav-item split">
+                    <p>|</p>
+                </li>
+                <li class="nav-item">
+                    <a class="login_logout" href="{% url 'logout' %}">Logout</a>
+                </li>
+                    {% else %}
+                    <a class="login_logout" href="{% url 'login' %}">Login</a>  
+                    {% endif %}
+                </li>
+            </ul>
+        </div>
+    </nav>

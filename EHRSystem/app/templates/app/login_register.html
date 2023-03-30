@@ -1,17 +1,218 @@
 {% extends 'index.html' %}
 {% block content%}
+<style>
+    body{
+        background-color: #EEFFFC;
+    }
+    /* Login page style */
+    .wrapper {
+        margin-top: 80px;
+        margin-bottom: 80px;
+    }
+
+    .form-signin {
+        max-width: 400px;
+        padding: 15px 35px 45px;
+        margin: 0 auto;
+        background-color: #fff;
+        border: 1px solid rgba(0, 0, 0, 0.1);
+        text-align: center;
+        box-shadow: 0 0 30px gray;
+    }
+
+    .form-signin .form-signin-heading,
+    .form-signin .checkbox {
+        margin-bottom: 30px;
+    }
+
+    .form-signin .checkbox {
+        font-weight: normal;
+    }
+
+    .form-signin .form-control {
+        position: relative;
+        font-size: 16px;
+        height: auto;
+        padding: 10px;
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+    }
+
+    .form-signin .form-control:focus {
+        z-index: 2;
+    }
+
+    .form-signin input[type="text"] {
+        margin-bottom: -1px;
+        border-radius: 8px;
+        background-color:#d9d9d9;
+    }
+
+    .form-signin input[type="password"] {
+        margin-bottom: 20px;
+        border-radius: 8px;
+        background-color:#d9d9d9;
+    }
+    .form-signin .btn{
+        background-color: #F4FFFF;
+        box-shadow: 0 4px 2px -2px gray;
+        width: 249px;
+    }
+    /* register page style*/
+    .signup-form {
+        text-align: center;
+        width: 450px;
+        margin: 0 auto;
+        background-color: #fff;
+        border: 1px solid rgba(0, 0, 0, 0.1);
+        text-align: center;
+        box-shadow: 0 0 30px gray;
+    }
+    .signup-form h2 {
+        color: #636363;
+        margin: 0 0 15px;
+        position: relative;
+        text-align: center;
+    }
+    .signup-form h2:before, .signup-form h2:after {
+        content: "";
+        height: 2px;
+        width: 30%;
+        background: #d4d4d4;
+        position: absolute;
+        top: 50%;
+        z-index: 2;
+    }	
+    .signup-form h2:before {
+        left: 0;
+    }
+    .signup-form h2:after {
+        right: 0;
+    }
+    .signup-form .hint-text {
+        color: #999;
+        margin-bottom: 30px;
+        text-align: center;
+    }
+    .signup-form form {
+        color: #999;
+        border-radius: 3px;
+        margin-bottom: 15px;
+        background: #f2f3f7;
+        box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+        padding: 30px;
+    }
+    .signup-form .form-group {
+        margin-bottom: 20px;
+    }
+    .signup-form input[type="checkbox"] {
+        margin-top: 3px;
+    }
+    .signup-form .btn {        
+        font-size: 16px;
+        font-weight: bold;		
+        min-width: 140px;
+        outline: none !important;
+        background-color: #F4FFFF;
+        box-shadow: 0 4px 2px -2px gray;
+        width: 249px;
+    }
+    .signup-form .row div:first-child {
+        padding-right: 10px;
+    }
+    .signup-form .row div:last-child {
+        padding-left: 10px;
+    }    	
+    .signup-form a {
+        color: #fff;
+        text-decoration: underline;
+    }
+    .signup-form a:hover {
+        text-decoration: none;
+    }
+    .signup-form form a {
+        color: #5cb85c;
+        text-decoration: none;
+    }	
+    .signup-form form a:hover {
+        text-decoration: underline;
+    } 
+    .signup-form .register{
+        color:#8D8D8D;
+        width: 249px;
+    }
+    .signup-form h2{
+        color: black;
+    }
+</style>
+    {% if page == 'login' %}
     <div>
-        <h2>Login</h2>
-        <form method="POST" action="">
-            {% csrf_token %}
-            <label>Username:</label>
-            <input type="text" name="username" placeholder="Enter Username">
-            <label>Password:</label>
-            <input type="password" name="password" placeholder="Enter Password">
-
-            <input type="submit" value="login"/>
-        </form>
-
+        <div class="wrapper">
+            <form class="form-signin" method="POST" action="">
+                {% csrf_token %}
+               <h2 class="form-signin-heading">Login</h2>
+               <input type="text" class="form-control" name="username" placeholder="Username" required="" autofocus="" />
+                <br>
+               <input  type="password" class="form-control" name="password" placeholder="Password" required=""/>      
+               <br>
+               <input class="btn btn-lg  " type="submit" value="login"/>  
+            </form>
+         </div>
+        
     </div>
-
+    {% else %}
+    <div>
+        <div class="signup-form">
+            <form action="" method="post">
+                <h2>Register</h2>
+                <div class="form-group row">
+                    <div class="col">
+                        <input type="text" class="form-control" placeholder="forename" name="forename">
+                    </div>
+                    <div class="col">
+                        <input type="text" class="form-control"  placeholder="surname" name="surname">
+                    </div>
+                </div> 
+                <div class="form-group">
+                    <input type="email" class="form-control" placeholder="email" name="email">
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="phone number" name="phonenumber">
+                </div>
+                <div class="form-group">
+                    <input type="password" class="form-control" placeholder="password" name="password">
+                </div>
+                <div class="form-group">
+                    <input type="password" class="form-control" placeholder="confirm password" name="confirm password">
+                </div>
+                <div class="form-group row">
+                        <div class="col">
+                            <select class="form-control" name="staff_pos" id="position">
+                            <option >Staff Position</option>
+                            <option value="sr_doc">Senior Doctor</option>
+                            <option value="jr_doc">Junior Doctor</option>
+                            <option value="admin">Admin</option>
+                            <option value="medtek_doc">Medical Technician Doctor</option>
+                            </select>
+                        </div>
+                        <div class="col">
+                            <select class="form-control" name="staff_gender" id="gender">
+                                <option>Select</option>
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                                <option value="Prefer">Prefer Not To Say</option>
+                            </select>
+                        </div>
+                </div>
+                <div class="form-group">
+                    <input type="date"  class="form-control" placeholder="Date of Birth Date" name="date_of_birth"/>
+                </div>
+                <input class="btn register btn-lg  " type="submit" value="Register Staff"/>  
+            </form>
+            
+            
+        </div>
+    </div>
+{% endif %}
 {% endblock content %}

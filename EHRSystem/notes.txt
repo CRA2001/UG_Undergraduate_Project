@@ -1,0 +1,39 @@
+Can you make me a small list of drugs for an electronic pharmacy system,the information I would like included in the list is:
+1. Item ID 
+2. Drug name
+3. Purpose 
+4. Expiry Date 
+5. Stock
+
+Item ID: 123456
+Drug name: Paracetamol
+Purpose: Pain Relief and Fever Reducer
+Expiry Date: 01/2025
+Stock: 50
+
+Item ID: 234567
+Drug name: Amoxicillin
+Purpose: Antibiotic
+Expiry Date: 12/2024
+Stock: 30
+
+Item ID: 345678
+Drug name: Omeprazole
+Purpose: Acid Reflux Treatment
+Expiry Date: 09/2025
+Stock: 20
+
+Item ID: 456789
+Drug name: Simvastatin
+Purpose: Cholesterol Lowering Agent
+Expiry Date: 06/2023
+Stock: 10
+
+Item ID: 567890
+Drug name: Metformin
+Purpose: Diabetes Medication
+Expiry Date: 03/2024
+Stock: 40
+
+
+
