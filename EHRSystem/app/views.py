@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
-
+from .forms import PharmacyForm
 patientDetails = Patients.objects.all()
 drugDetails = DrugsPharmacy.objects.all()
 
@@ -65,3 +65,33 @@ def staff(request):
 def pharmacyStock(request):
     context = {'drugs':drugDetails}
     return render(request,'app/pharmacyStock.html',context)
+
+def createInv(request):
+    form = PharmacyForm()
+
+    if request.method == 'POST':
+        form = PharmacyForm(request.POST)
+        if form.is_valid():
+            form.save()
+        return redirect('pharmacy')
+    context = {'form':form}
+    return render(request,'app/stock_form.html',context)
+
+def updateInv(request,pk):
+    drug = DrugsPharmacy.objects.get(id=pk)
+    initial_data = {'drug_name': drug.drug_name,'purpose': drug.purpose,'expiry_date': drug.expiry_date,'stock': drug.stock}
+    form = PharmacyForm(initial=initial_data)
+    if request.method == "POST":
+        form = PharmacyForm(request.POST, instance=drug)
+        if  form.is_valid():
+            form.save()
+            return redirect('pharmacy')
+    context = {'form':form}
+    return render(request,'app/stock_form.html',context)
+
+def deleteInv(request,pk):
+    drug = DrugsPharmacy.objects.get(id=pk)
+    if request.method == 'POST':
+        drug.delete()
+        return redirect('pharmacy')
+    return render(request,'app/delete.html',{'obj':drug })

@@ -1,8 +1,59 @@
-.navbar{
+
+/* Navbar Styling*/
+nav{
     background-color: #002D2B;
 }
 
 .logo{
-    width: 60px;
-    height: 60px;
+    width: 80px;
+    height: 80px;
+}
+.hello_Text{
+    color:white;
+}
+.split{
+    color: white;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.login_logout{
+    color: white;
+}
+/* Patient Consult styling */
+
+.col-title{
+    text-align: center;
+}
+.patient_attr{
+    text-align: center;
+}
+h2{
+    text-align: center;
+}
+.title{
+    text-align: center;
+    padding-bottom: 3%;
+    text-decoration: underline;
+}
+.homebtn{
+    padding-left: 2%;
+    color: black;
+}
+
+/* Pharmacy Stock Styling */
+.item, .col-heading{
+    text-align: center;
+}
+h2{
+    text-align: center;
+}
+.title{
+    text-align: center;
+    padding-bottom: 3%;
+    text-decoration: underline;
+}
+.homebtn{
+    padding-left: 2%;
+    color: black;
 }

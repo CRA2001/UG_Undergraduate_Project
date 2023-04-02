@@ -21,6 +21,7 @@
 <a href="{% url 'mainpage' %}" class="homebtn"><i class="fa-solid fa-arrow-left"></i> Home</a>
 <div class="container-fluid">
     <h2 class="title">Pharmacy Inventory</h2>
+    <a href="{% url 'createInv'%}"> Add new inventory</a>
     <div class="row">
         <div class="col col-heading">
             <p>ID</p>
@@ -36,6 +37,12 @@
         </div>
         <div class="col col-heading">
             <p>Stock</p>
+        </div>
+        <div class="col col-heading">
+            <p></p>
+        </div>
+        <div class="col col-heading">
+            <p></p>
         </div>
     </div>
     {% for drug in drugs %}
@@ -54,6 +61,12 @@
         </div>
         <div class="col item">
             <p>{{drug.stock}}</p>
+        </div>
+        <div class="col item">
+            <a href="{% url 'updateInv' drug.id %}">Update</a>
+        </div>
+        <div class="col item">
+            <a href="{%  url 'deleteInv' drug.id %}">Del</a>
         </div>
     </div>
     {% endfor %}
