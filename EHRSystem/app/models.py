@@ -38,3 +38,24 @@ class DrugsPharmacy(models.Model):
 
     def formatted_expiry_date(self):
         return self.expiry_date.strftime('%m/%Y')
+    
+
+class TestResult(models.Model):
+    PATIENT_GENDER_CHOICES = [
+        ('Male', 'Male'),
+        ('Female', 'Female'),
+        ('Other', 'Other')
+    ]
+    TEST_TYPE_CHOICES = [
+        ('Blood Test', 'Blood Test'),
+        ('MRI', 'MRI'),
+        ('XRAY', 'X-Ray')
+    ]
+    patient_name = models.CharField(max_length=255)
+    patient_gender = models.CharField(max_length=10, choices=PATIENT_GENDER_CHOICES)
+    test_type = models.CharField(max_length=10, choices=TEST_TYPE_CHOICES)
+    lab_result_notes = models.TextField()
+    medical_image = models.FileField(upload_to='test_results/')
+
+    def __str__(self):
+        return self.patient_name

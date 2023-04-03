@@ -1,10 +1,13 @@
-from django.shortcuts import render, redirect
-from .models import Patients, DrugsPharmacy
+from django.shortcuts import render, redirect, get_object_or_404
+from django.http import FileResponse
+import io
+from .models import Patients, DrugsPharmacy, TestResult
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from django.views import View
 from django.contrib.auth import authenticate, login, logout
-from .forms import PharmacyForm,NewPatientForm
+from .forms import PharmacyForm,NewPatientForm,TestResultForm
 patientDetails = Patients.objects.all()
 drugDetails = DrugsPharmacy.objects.all()
 
@@ -124,3 +127,51 @@ def deleteInv(request,pk):
         drug.delete()
         return redirect('pharmacy')
     return render(request,'app/delete.html',{'obj':drug })
+
+#Create Test Results sections
+
+def test_results(request):
+    test_results = TestResult.objects.all()
+    return render(request, 'app/test_results.html', {'test_results': test_results})
+
+def add_test_result(request):
+    if request.method == 'POST':
+        form = TestResultForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('test_results')
+    else:
+        form = TestResultForm()
+    return render(request, 'app/add_test_result.html', {'form': form})
+
+def update_test_result(request, pk):
+    test_result = get_object_or_404(TestResult, pk=pk)
+    if request.method == 'POST':
+        form = TestResultForm(request.POST, request.FILES, instance=test_result)
+        if form.is_valid():
+            form.save()
+            return redirect('test_results')
+    else:
+        form = TestResultForm(instance=test_result)
+    return render(request, 'app/add_test_result.html', {'form': form})
+
+def delete_test_result(request, pk):
+    result = TestResult.objects.get(id=pk)
+    if request.method == 'POST':
+        result.delete()
+        return redirect('test_results')
+    return render(request,'app/delete.html',{'obj':result})
+
+class DownloadPDFView(View):
+    def get(self, request, pk):
+        test_result = get_object_or_404(TestResult, pk=pk)
+        pdf_file = test_result.medical_image.path
+        
+        # Open the PDF file and read its contents into memory
+        with open(pdf_file, 'rb') as f:
+            buffer = io.BytesIO(f.read())
+        
+        # Close the file and create a response with the PDF contents
+        response = FileResponse(buffer, content_type='application/pdf')
+        response['Content-Disposition'] = f'attachment; filename="{test_result.patient_name,test_result.test_type}.pdf"'
+        return response

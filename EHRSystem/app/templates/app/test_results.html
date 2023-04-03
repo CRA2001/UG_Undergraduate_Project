@@ -1,0 +1,31 @@
+{% extends 'index.html' %}
+
+{% block content %}
+<div class="container">
+  <h1 class="text-center">Test Results</h1>
+  <a href="{% url 'add_test_result' %}">Add Results</a>
+  <hr>
+  {% for result in test_results%}
+  <div class="row">
+    <div class="col">
+      <p>Name:{{result.patient_name}}</p>
+      <p>Gender:{{result.patient_gender}}</p>
+      <p>Test Type:{{result.test_type}}</p>      
+    </div>
+    <div class="col">
+      <p></p>
+      <p>{{result.lab_result_notes}}</p>
+    </div>
+    <div class="col">
+      <a href="{% url 'download_pdf' result.id %}">Download PDF</a>
+    </div>
+    <div class="col-1">
+      <a class="delete_btn" href="{% url 'delete_test_result' result.id%}"><i class="fa-solid fa-trash"></i></a>
+    </div>
+  </div>
+
+  {% endfor %}
+  <div class="row">
+  </div>
+</div>
+{% endblock %}

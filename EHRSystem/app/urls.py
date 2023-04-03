@@ -17,5 +17,10 @@ urlpatterns = [
     path('create-Inv/',views.createInv, name='createInv'),
     path('update-Inv/<str:pk>/',views.updateInv, name='updateInv'),
     path('delete-Inv/<str:pk>/',views.deleteInv, name='deleteInv'),    
+    path('test_results/', views.test_results, name='test_results'),
+    path('add_test_result/', views.add_test_result, name='add_test_result'),
+    path('update_test_result/<int:pk>/', views.update_test_result, name='update_test_result'),
+    path('delete_test_result/<int:pk>/', views.delete_test_result, name='delete_test_result'),
+    path('test_results/<int:pk>/download_pdf/', views.DownloadPDFView.as_view(), name='download_pdf'),
     path('admin/',admin.site.urls)
 ]
