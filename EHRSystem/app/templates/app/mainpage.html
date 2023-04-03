@@ -1,4 +1,20 @@
 {% extends 'index.html'%}
 {% block content %}
-<h2> Main Page</h2>
+<div class="mainpage container">
+    <div class="row">
+        <div class="col">
+            <a class="menu_btn" href="#">Patient Consultation</a>
+            <a class="menu_btn" href="{% url 'pharmacy' %}">Drug Inventory</a>
+            <a class="menu_btn" href="#">Cases</a>
+            <a class="menu_btn" href="{% url 'patientList'%}">Patient List</a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <a class="menu_btn" href="#">Lab Results</a>
+            <a class="menu_btn" href="#"> Manage Staff</a>
+            <a class="menu_btn" href="#">Staff Account Management</a>
+        </div>
+    </div>
+</div>
 {% endblock content %}

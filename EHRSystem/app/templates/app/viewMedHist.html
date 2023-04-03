@@ -1,0 +1,70 @@
+{% extends 'index.html' %}
+{% block content %}
+
+<style>
+    .medhist{
+        background-color: #D9D9D9;
+    }
+    .main{
+        background-color: white;
+        
+        margin-left: 50px;
+        margin-right:50px;
+        margin: auto;
+    }
+    
+</style>
+
+<div class="main">
+    <div class="row">
+        <div class="col patientListbtn">
+            <a href="{% url 'patientList' %}"><i class="fa-solid fa-arrow-left"></i>Patient List</a>
+        </div>
+        <div class="col">
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-4">
+            <h2>{{patient.name}}</h2>
+            <p>Sex : {{patient.sex}}</p>
+            <p>Email: {{patient.email}}</p>
+            <p>Phone: {{patient.phone}}</p>
+            <p>Date of birth: {{patient.date_of_birth}}</p> 
+        </div>
+        <div class="col medhist">
+            <h2>Medical History</h2>
+            <div class="row">
+                <div class="col">
+                    <p>Blood Group: {{patient.blood_group}}</p>
+                    <p>Medical Conditions</p>
+                    <p>{{patient.medicalHist_conditions}}</p>
+                    <p>Past Surgeries</p>
+                    <p>{{patient.medicalHist_pastSurgery}}</p>
+                    <div class="row">
+                        <div class="col">
+                            <p>Medication</p>
+                            <p>{{patient.medicalHist_medication}}</p>
+                        </div>
+                        <div class="col">
+                            <p>Mental Health</p>
+                            <p>{{patient.medicalHist_mental}}</p>
+                            <p>Sexual Health</p>
+                            <p>{{patient.medicalHist_sexual}}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <p>allergies</p>
+                    <p>{{patient.allergies}}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+
+    </div>
+
+</div>
+
+{% endblock content %}
