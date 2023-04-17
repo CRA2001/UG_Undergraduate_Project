@@ -1,19 +1,68 @@
 {% extends 'index.html'%}
 {% block content %}
+<style>
+    .profile{
+        background-color: white;
+        padding-bottom: 20%;
+    }
+    .profile_info{
+        text-align: left;
+    }
+    .menu_btns{
+        text-align: center;
+        margin-top: 30%;
+    }
+</style>
 <div class="mainpage container">
+    <h4 class="display-5">E.H.R System</h4>
     <div class="row">
         <div class="col">
-            <a class="menu_btn" href="#">Patient Consultation</a>
-            <a class="menu_btn" href="{% url 'pharmacy' %}">Drug Inventory</a>
-            <a class="menu_btn" href="#">Cases</a>
-            <a class="menu_btn" href="{% url 'patientList'%}">Patient List</a>
+            <div class="row">
+                {% if request.user.groups.exists %}
+                {% for group in request.user.groups.all %}
+                {% if group.name == 'admin'%}
+                <a class="menu_btn" href="{% url 'staffManage' %}">Staff Account Management</a>
+                <a class="menu_btn" href="{% url 'patientList'%}">Patient Lists</a>
+
+                {% endif %}
+                {% if group.name == 'jr_doctors'%}
+                <a class="menu_btn" href="#">Patient Consultation</a>
+                <a class="menu_btn" href="{% url 'patientList' %}">Patient List</a>
+                <a class="menu_btn" href="{% url 'pharmacy' %}">Drug Inventory</a>
+                {% endif %}
+                {% if group.name == 'sr_doctors'%}
+                <a class="menu_btn" href="#">Patient Consultation</a>
+                <a class="menu_btn" href="{% url 'patientList' %}">Patient List</a>
+                <a class="menu_btn" href="{% url 'pharmacy' %}">Pharmacy </a>
+                <a class="menu_btn" href="{% url 'test_results' %}">Lab Results</a>
+                {% endif%}
+                {% if group.name == 'LabTechnician_Doc' %}
+                <a class="menu_btn" href="#">Lab Requests</a>
+                <a class="menu_btn" href="{% url 'patientList' %}">Patient Lists</a>
+                <a class="menu_btn" href="{% url 'test_results' %}">Lab Results</a>
+                <a class="menu_btn" href="{% url 'pharmacy' %}">Pharmacy</a>
+                {% endif %}
+            </div>
         </div>
-    </div>
-    <div class="row">
-        <div class="col">
-            <a class="menu_btn" href="{% url 'test_results' %}">Lab Results</a>
-            <a class="menu_btn" href="#"> Manage Staff</a>
-            <a class="menu_btn" href="#">Staff Account Management</a>
+        <div class="col-3 profile">
+            <h5>{{request.user.first_name}} {{request.user.last_name}}</h5>
+            <p class="profile_info">Staff ID: {{request.user.id}}</p>
+            {% if group.name == 'LabTechnician_Doc' %}
+            <p class="profile_info">Position: Med Lab Doctor </p>
+            {% endif %}
+            {% if group.name == 'admin' %}
+            <p class="profile_info">Position: Admin </p>
+            {% endif %}
+            {% if group.name == 'sr_doctors' %}
+            <p class="profile_info">Position: Senior Doctor </p>
+            {% endif %}
+            {% if group.name == 'jr_doctors' %}
+            <p class="profile_info">Position: Junior Doctor </p>
+            {% endif %}
+            <p class="profile_info">Date Joined: {{request.user.date_joined}}</p>
+            {% endfor %}
+          {% endif %}
+
         </div>
     </div>
 </div>

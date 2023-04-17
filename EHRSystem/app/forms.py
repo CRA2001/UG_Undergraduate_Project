@@ -1,5 +1,7 @@
 from django.forms import ModelForm
 from .models import DrugsPharmacy,Patients,TestResult
+from django import forms
+from django.contrib.auth import  get_user_model
 
 class PharmacyForm(ModelForm):
     class Meta:
@@ -14,4 +16,9 @@ class NewPatientForm(ModelForm):
 class TestResultForm(ModelForm):
     class Meta:
         model = TestResult
+        fields = '__all__'
+
+class addStaffForm(ModelForm):
+    class Meta:
+        model = get_user_model()
         fields = '__all__'

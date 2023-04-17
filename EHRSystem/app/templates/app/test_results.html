@@ -1,11 +1,10 @@
 {% extends 'index.html' %}
-
 {% block content %}
 <div class="container">
   <h1 class="text-center">Test Results</h1>
   <a href="{% url 'add_test_result' %}">Add Results</a>
   <hr>
-  {% for result in test_results%}
+  {% for result in test_results %}
   <div class="row">
     <div class="col">
       <p>Name:{{result.patient_name}}</p>

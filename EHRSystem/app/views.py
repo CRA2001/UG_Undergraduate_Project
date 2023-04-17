@@ -7,9 +7,13 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.views import View
 from django.contrib.auth import authenticate, login, logout
-from .forms import PharmacyForm,NewPatientForm,TestResultForm
+from .forms import PharmacyForm,NewPatientForm,TestResultForm,addStaffForm
 patientDetails = Patients.objects.all()
 drugDetails = DrugsPharmacy.objects.all()
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import render, redirect
+from django.contrib.auth import get_user_model
 
 
 def loginPage(request):
@@ -38,15 +42,19 @@ def logoutUser(request):
     logout(request)
     return redirect('mainpage')
 
+
 def registerUser(request):
     page = 'register'
     return  render(request,'app/login_register.html')
+
+
 
 @login_required(login_url='/login')
 def index(request):
     return render(request,'app/mainpage.html')
 
 #Patients
+
 @login_required(login_url='/login')
 def patientList(request):
     context = {'patients':patientDetails}
@@ -175,3 +183,41 @@ class DownloadPDFView(View):
         response = FileResponse(buffer, content_type='application/pdf')
         response['Content-Disposition'] = f'attachment; filename="{test_result.patient_name,test_result.test_type}.pdf"'
         return response
+
+def staffManagement(request):
+    users = get_user_model().objects.all()
+    context = {'users':users}
+    return render(request,'app/staffmanage.html',context)
+
+
+@login_required(login_url='/login')    
+def addStaff(request):
+    form = addStaffForm()
+    if request.method == 'POST':
+        form = addStaffForm(request.POST)
+        if form.is_valid():
+            form.save()
+        return redirect('staffManage')
+    context = {'form':form}
+    return render(request,'app/addStaff.html',context)
+
+
+def deleteStaff(request,pk):
+    staff = get_user_model().objects.get(id=pk)
+    if request.method == 'POST':
+        staff.delete()
+        return redirect('staffManage')
+    return render(request,'app/delete.html',{'obj':staff})
+
+def updateStaff(request,pk):
+    user = get_user_model().objects.get(id=pk)
+    initial_data = {'username':user.username,'email':user.email,'forename':user.first_name,'surname':user.last_name,'date':user.date_joined,'groups':user.groups.all()}
+    form = addStaffForm(initial=initial_data)
+    if request.method == "POST":
+        form = addStaffForm(request.POST, instance=user)
+        if  form.is_valid():
+            form.save()
+            return redirect('pharmacy')
+    context = {'form':form}
+    return render(request,'app/addStaff.html',context)
+

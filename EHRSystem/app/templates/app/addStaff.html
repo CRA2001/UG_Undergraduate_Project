@@ -1,0 +1,14 @@
+{% extends 'index.html' %}
+{% block content %}
+<div class="container">
+    <form method="POST" action="">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <div class="form-group">
+            <label for="{{ form.group.id_for_label }}">Group:</label>
+            {{ form.group }}
+        </div>
+        <input type="submit" value="Submit">
+    </form>
+</div>
+{% endblock content %}

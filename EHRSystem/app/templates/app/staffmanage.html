@@ -1,0 +1,61 @@
+{% extends 'index.html' %}
+{% block content %}
+        <h1 class="display-5" style="text-align: center;"> Staff Management</h1>
+        <a href="{% url 'addStaff' %}">Add Staff</a>
+        <div class="row">   
+            <div class="col">
+                <h3>Username</h3>
+            </div>
+            <div class="col">
+                <h3>Email</h3>
+            </div>
+            <div class="col">
+                <h3>Forename</h3>
+            </div>
+            <div class="col">
+                <h3>Surname</h3>
+            </div>
+            <div class="col">
+                <h3>Position</h3>
+            </div>
+            <div class="col">
+                <h3>Date Joined</h3>
+            </div>
+            <div class="col-1"></div>
+            <div class="col-1"></div>         
+        </div>
+        <hr>
+        {% for user in users %}
+        <div class="row">
+            <div class="col">
+                <p class="p-detail">{{ user.username }}</p>
+            </div>
+            <div class="col">
+                <p class="p-detail">{{user.email}}</p>
+            </div>
+            <div class="col">
+                <p class="p-detail">{{user.first_name}}</p>
+            </div>
+            <div class="col">
+                <p class="p-detail">{{user.last_name}}</p>
+            </div>
+            <div class="col">
+                <p class="p-detail">{{user.date_joined|date:"Y-m-d"}}</p>
+            </div>
+            <div class="col">
+                {% if request.user.groups.exists %}
+                {% for group in request.user.groups.all %}
+                <p class="p-detail">{{group.name}}</p>
+                {% endfor %}
+                {% endif %}
+            </div>
+            <div class="col-1">
+                <a  href="{% url 'updateStaff' user.id %}"><i class="fa-solid fa-pen-to-square"></i></a>
+            </div>
+            <div class="col-1">
+                <a href="{% url 'deleteStaff' user.id %}"><i class="fa-solid fa-trash"></i></a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+{% endblock content %}
