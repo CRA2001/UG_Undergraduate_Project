@@ -79,17 +79,3 @@ class TestResult(models.Model):
     def __str__(self):
         return self.patient_name
 
-# class Patient_Consult(models.Model):
-#     patient = models.ForeignKey(Patients, on_delete=models.CASCADE)
-#     date = models.DateTimeField(auto_now_add=True)
-#     medical_history = models.TextField()
-#     vital_signs = models.TextField()
-#     symptoms = models.TextField()
-#     physical_exam = models.TextField()
-#     diagnosis = models.TextField()
-#     treatment_plan = models.TextField()
-#     assessment = models.TextField()
-
-#     def __str__(self):
-#         return f"Consultation for {self.patient.name} on {self.date}"
-

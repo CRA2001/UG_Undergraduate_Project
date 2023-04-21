@@ -221,3 +221,11 @@ def updateStaff(request,pk):
     context = {'form':form}
     return render(request,'app/addStaff.html',context)
 
+def patientConsultationPg1(request):
+    patients = Patients.objects.all()
+    context = {'patients':patients}
+    return render(request,'app/patConsult1.html',context)
+
+def patientConsultationPg2(request):
+    context ={}
+    return render(request,'app/patConsult2_form.html',context)

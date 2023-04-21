@@ -1,0 +1,7 @@
+{% extends 'index.html' %}
+{% block content %}
+{% for patient in patients%}
+<p>{{patient.id}} | {{patient.name}}</p>
+<a href="{% url 'patient_consult_pg2' %}">Consutlation Form</a>
+{% endfor %}
+{% endblock content %}

@@ -26,12 +26,12 @@
 
                 {% endif %}
                 {% if group.name == 'jr_doctors'%}
-                <a class="menu_btn" href="#">Patient Consultation</a>
+                <a class="menu_btn" href="{% url 'patient_consult_pg1' %}">Patient Consultation</a>
                 <a class="menu_btn" href="{% url 'patientList' %}">Patient List</a>
                 <a class="menu_btn" href="{% url 'pharmacy' %}">Drug Inventory</a>
                 {% endif %}
                 {% if group.name == 'sr_doctors'%}
-                <a class="menu_btn" href="#">Patient Consultation</a>
+                <a class="menu_btn" href="{% url 'patient_consult_pg1' %}">Patient Consultation</a>
                 <a class="menu_btn" href="{% url 'patientList' %}">Patient List</a>
                 <a class="menu_btn" href="{% url 'pharmacy' %}">Pharmacy </a>
                 <a class="menu_btn" href="{% url 'test_results' %}">Lab Results</a>

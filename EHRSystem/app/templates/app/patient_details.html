@@ -1,0 +1,9 @@
+{% extends 'index.html' %}
+
+{% block content %}
+  <h1>{{ object.name }} (ID: {{ object.pk }})</h1>
+  <p>Date of Birth: {{ object.date_of_birth }}</p>
+  <p>Gender: {{ object.get_sex_display }}</p>
+  <a href="{% url 'patient_consultation' object.pk %}" class="btn btn-primary">Patient Consultation</a>
+  <a href="{% url 'medical_history' object.pk %}" class="btn btn-secondary" target="_blank">Medical History</a>
+{% endblock %}

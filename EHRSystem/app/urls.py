@@ -28,5 +28,7 @@ urlpatterns = [
     path('addStaff/',views.addStaff,name='addStaff'),
     path('deleteStaff/<str:pk>',views.deleteStaff,name='deleteStaff'),
     path('updateStaff/<str:pk>',views.updateStaff,name='updateStaff'),
+    path('patConsult1/',views.patientConsultationPg1,name='patient_consult_pg1'),
+    path('patConsult2/',views.patientConsultationPg2,name='patient_consult_pg2'),
     path('admin/',admin.site.urls)
 ]
