@@ -14,7 +14,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from django.contrib.auth import get_user_model
-
+from django.db.models import Q
 
 def loginPage(request):
     page = 'login'
@@ -57,7 +57,16 @@ def index(request):
 
 @login_required(login_url='/login')
 def patientList(request):
-    context = {'patients':patientDetails}
+    query = request.GET.get('q')
+    if(query):
+        patients = Patients.objects.filter(
+            Q(name__icontains=query) |
+            Q(email__icontains=query) |
+            Q(phone__icontains=query) 
+        )
+    else:
+        patients = Patients.objects.all()
+    context = {'patients':patients}
     return render(request,'app/patientList.html',context)
 
 @login_required(login_url='/login')    

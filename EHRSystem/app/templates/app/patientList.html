@@ -5,6 +5,10 @@
 <a href="{% url 'mainpage' %}" class="homebtn"><i class="fa-solid fa-arrow-left"></i>Home</a>
 <div class="container-fluid">
         <h2 class="title"> Patient Management</h2>
+        <form class="form-inline my-2 my-lg-0" method="GET">
+            <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search" name="q" value="{{ request.GET.q }}">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </form>
         <a class="addPatient_btn" href="{% url 'createPat' %}">Add Patient</a>
         <div class="row">
             <div class="col col-title">
