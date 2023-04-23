@@ -1,15 +1,16 @@
 {% extends 'index.html'%}
 {% block content %}
-<style>
-</style>
-<a href="{% url 'mainpage' %}" class="homebtn"><i class="fa-solid fa-arrow-left"></i>Home</a>
-<div class="container-fluid">
+<div class="container">
         <h2 class="title"> Patient Management</h2>
-        <form class="form-inline my-2 my-lg-0" method="GET">
-            <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search" name="q" value="{{ request.GET.q }}">
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-        </form>
-        <a class="addPatient_btn" href="{% url 'createPat' %}">Add Patient</a>
+        <!-- SearchBar which filter the list based on name, email and phone -->
+        <div class="row">
+            <form class="form-inline my-2 my-lg-0" method="GET">
+                <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search" name="q" value="{{ request.GET.q }}">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            </form>
+            <a class="addPatient_btn" href="{% url 'createPat' %}">Add Patient</a>
+        </div>
+        <!-- column titles -->
         <div class="row">
             <div class="col col-title">
                 <h4>Name</h4>
@@ -34,7 +35,7 @@
             </div>
             <div class="col"></div>
         </div>
-
+        <!-- Values of the patients -->
         {% for patient in patients %}
             <div class="row">
                 <div class="col">
@@ -55,9 +56,11 @@
                 <div class="col">
                     <p class="patient_attr">{{patient.ethnicity}}</p>
                 </div>
+                <!-- Button which opens the medical history of the patient -->
                 <div class="col text-center">
                     <a class="viewMedHist_btn" href="{% url 'viewMedHist' patient.id %}">See History</a>
                 </div>
+                <!-- Button which deletes all records of the patient -->
                 <div class="col">
                     <a class="delete_btn" href="{% url 'deletePatient' patient.id%}"><i class="fa-solid fa-trash"></i></a>
                 </div>

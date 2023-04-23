@@ -109,7 +109,15 @@ def staff(request):
 #Pharmacy
 @login_required(login_url='/login')
 def pharmacyStock(request):
-    context = {'drugs':drugDetails}
+    query = request.GET.get('q')
+    if query:
+        drugs = DrugsPharmacy.objects.filter(
+            Q(drug_name__icontains=query) |
+            Q(purpose__icontains=query)
+        )
+    else:
+        drugs = DrugsPharmacy.objects.all() 
+    context = {'drugs':drugs}
     return render(request,'app/pharmacyStock.html',context)
 
 @login_required(login_url='/login')
@@ -146,7 +154,6 @@ def deleteInv(request,pk):
     return render(request,'app/delete.html',{'obj':drug })
 
 #Create Test Results sections
-
 def test_results(request):
     test_results = TestResult.objects.all()
     return render(request, 'app/test_results.html', {'test_results': test_results})
