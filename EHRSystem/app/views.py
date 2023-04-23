@@ -238,7 +238,14 @@ def updateStaff(request,pk):
     return render(request,'app/addStaff.html',context)
 
 def patientConsultationPg1(request):
-    patients = Patients.objects.all()
+    query = request.GET.get('q')
+    if query:
+        patients = Patients.objects.filter(
+            Q(id__icontains=query)|
+            Q(name__icontains=query)
+        )
+    else:
+        patients = Patients.objects.all()
     context = {'patients':patients}
     return render(request,'app/patConsult1.html',context)
 

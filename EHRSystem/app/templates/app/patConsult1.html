@@ -1,7 +1,17 @@
 {% extends 'index.html' %}
 {% block content %}
-{% for patient in patients%}
-<p>{{patient.id}} | {{patient.name}}</p>
-<a href="{% url 'patient_consult_pg2' %}">Consutlation Form</a>
-{% endfor %}
+<div class="container">
+    <div class="row">
+        <form class="form-inline my-2 my-lg-0" method="GET">
+            <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search" name="q" value="{{ request.GET.q }}">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </form>
+    </div>
+    {% for patient in patients %}
+    <div class="row">
+        <p style="padding-right: 2%;">{{patient.id}} | {{patient.name}}</p>
+        <a href="{% url 'patient_consult_pg2' %}"> Consutlation Form</a>
+    </div>
+    {% endfor %}
+</div>
 {% endblock content %}
