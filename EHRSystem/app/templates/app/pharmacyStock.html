@@ -26,7 +26,7 @@
             <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search" name="q" value="{{ request.GET.q }}">
             <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
         </form> 
-        <a href="{% url 'createInv'%}"> Add new inventory</a>
+        <a class="addPatient_btn" href="{% url 'createInv'%}"> Add new inventory</a>
     </div>
     <div class="row">
         <div class="col col-heading">
@@ -72,7 +72,7 @@
             <a href="{% url 'updateInv' drug.id %}">Update</a>
         </div>
         <div class="col item">
-            <a href="{%  url 'deleteInv' drug.id %}">Del</a>
+            <a class="delete_btn" href="{%  url 'deleteInv' drug.id %}"><i class="fa-solid fa-trash"></i></a>
         </div>
     </div>
     {% endfor %}
