@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import FileResponse
 import io
-from .models import Patients, DrugsPharmacy, TestResult
+from .models import Patients, DrugsPharmacy, TestResult, Consultations
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
@@ -238,6 +238,9 @@ def updateStaff(request,pk):
     return render(request,'app/addStaff.html',context)
 
 def patientConsultationPg1(request):
+    # query is used for the searchbar which will search based
+    # on the id and the name of the search value inputted in 
+    # the searchbar
     query = request.GET.get('q')
     if query:
         patients = Patients.objects.filter(
@@ -245,10 +248,34 @@ def patientConsultationPg1(request):
             Q(name__icontains=query)
         )
     else:
+    # if the query value(search value) is doesn't exist then just output all
         patients = Patients.objects.all()
     context = {'patients':patients}
     return render(request,'app/patConsult1.html',context)
 
-def patientConsultationPg2(request):
-    context ={}
+def patientConsultationPg2(request, pk):
+    patient = Patients.objects.get(id=pk)
+    if request.method == 'POST':
+        # Save the consultation form data to the database
+        consultation = Consultations.objects.create(
+            patient=patient,
+            doctor=request.user,
+            blood_pressure=request.POST.get('blood_pressure'),
+            temperature=request.POST.get('temperature'),
+            weight=request.POST.get('weight'),
+            height=request.POST.get('height'),
+            visual_exam=request.POST.get('visual_exam'),
+            physical_exam=request.POST.get('physical_exam'),
+            other_notes=request.POST.get('other_notes'),
+        )
+
+        # Redirect to the success page
+        return redirect('patient_consult_success', consultation_id=consultation.id)
+    
+    context = {
+        'patient': patient
+    }
     return render(request,'app/patConsult2_form.html',context)
+
+def patientConsultationSuccess(request, consultation_id):
+    consultation = Consultations.objects.get(id=consultation_id)

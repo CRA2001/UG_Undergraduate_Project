@@ -29,6 +29,6 @@ urlpatterns = [
     path('deleteStaff/<str:pk>',views.deleteStaff,name='deleteStaff'),
     path('updateStaff/<str:pk>',views.updateStaff,name='updateStaff'),
     path('patConsult1/',views.patientConsultationPg1,name='patient_consult_pg1'),
-    path('patConsult2/',views.patientConsultationPg2,name='patient_consult_pg2'),
-    path('admin/',admin.site.urls)
+    path('patConsult2/<int:pk>/',views.patientConsultationPg2,name='patient_consult_pg2'),
+    path('patConsultSuccess/<int:consultation_id>/',views.patientConsultationSuccess,name='patient_consult_success'),    path('admin/',admin.site.urls)
 ]

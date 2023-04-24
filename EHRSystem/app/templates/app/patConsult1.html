@@ -10,7 +10,7 @@
     {% for patient in patients %}
     <div class="row">
         <p style="padding-right: 2%;">{{patient.id}} | {{patient.name}}</p>
-        <a href="{% url 'patient_consult_pg2' %}"> Consutlation Form</a>
+        <a href="{% url 'patient_consult_pg2'  patient.id %}"> Consultation Form</a>
     </div>
     {% endfor %}
 </div>

@@ -4,7 +4,6 @@ from django.utils import timezone
 from django.contrib.auth.models import AbstractUser, Group, Permission
 
 
-
 class User(AbstractUser):
     group = models.CharField(max_length=100, blank=True, null=True)
     groups = models.ManyToManyField(
@@ -21,7 +20,6 @@ class User(AbstractUser):
         related_name='myapp_user_permissions',
         related_query_name='user',
     )
-
 class Patients(models.Model):
     SEX_CHOICES = [
         ('M', 'Male'),
@@ -45,8 +43,6 @@ class Patients(models.Model):
 
     def __str__(self):
         return f"{self.name} (ID: {self.pk})"
-
-
 class DrugsPharmacy(models.Model):
 
     drug_name = models.CharField(max_length=100)
@@ -79,3 +75,17 @@ class TestResult(models.Model):
     def __str__(self):
         return self.patient_name
 
+class Consultations(models.Model):
+    patient = models.ForeignKey(Patients, on_delete=models.CASCADE)
+    doctor = models.ForeignKey(User, on_delete=models.CASCADE)
+    blood_pressure = models.CharField(max_length=255)
+    temperature = models.CharField(max_length=255)
+    weight = models.CharField(max_length=255)
+    height = models.CharField(max_length=255)
+    visual_exam = models.TextField(blank=True)
+    physical_exam = models.TextField(blank=True)
+    other_notes = models.TextField(blank=True)
+    date_created = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Consultation for {self.patient} by {self.doctor}"
