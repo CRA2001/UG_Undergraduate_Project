@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 from django.utils import timezone
 from django.contrib.auth.models import AbstractUser, Group, Permission
 
-
+from django.contrib.auth import get_user_model
 class User(AbstractUser):
     group = models.CharField(max_length=100, blank=True, null=True)
     groups = models.ManyToManyField(
@@ -77,7 +77,7 @@ class TestResult(models.Model):
 
 class Consultations(models.Model):
     patient = models.ForeignKey(Patients, on_delete=models.CASCADE)
-    doctor = models.ForeignKey(User, on_delete=models.CASCADE)
+    doctor = models.CharField(max_length=255)
     blood_pressure = models.CharField(max_length=255)
     temperature = models.CharField(max_length=255)
     weight = models.CharField(max_length=255)

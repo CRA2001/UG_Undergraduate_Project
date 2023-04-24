@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.http import FileResponse
 import io
 from .models import Patients, DrugsPharmacy, TestResult, Consultations
+from django.contrib.auth import get_user
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
@@ -256,10 +257,12 @@ def patientConsultationPg1(request):
 def patientConsultationPg2(request, pk):
     patient = Patients.objects.get(id=pk)
     if request.method == 'POST':
+        doctor = f"{request.user.first_name} {request.user.last_name}"
+
         # Save the consultation form data to the database
         consultation = Consultations.objects.create(
             patient=patient,
-            doctor=request.user,
+            doctor=doctor,
             blood_pressure=request.POST.get('blood_pressure'),
             temperature=request.POST.get('temperature'),
             weight=request.POST.get('weight'),
@@ -271,11 +274,31 @@ def patientConsultationPg2(request, pk):
 
         # Redirect to the success page
         return redirect('patient_consult_success', consultation_id=consultation.id)
-    
+
     context = {
         'patient': patient
     }
     return render(request,'app/patConsult2_form.html',context)
 
+
 def patientConsultationSuccess(request, consultation_id):
     consultation = Consultations.objects.get(id=consultation_id)
+    context = {
+        'consultation': consultation
+    }
+    return render(request, 'app/patConsult_success.html', context)
+
+def patient_detail(request, pk):
+    patient = get_object_or_404(Patients, id=pk)
+    consultations = patient.consultations_set.all().order_by('-date_created')
+
+    context = {
+        'patient': patient,
+        'consultations': consultations
+    }
+    return render(request, 'app/patient_detail.html', context)
+
+def consultation_list(request):
+    consForms = Consultations.objects.all()
+    context= {'Consultations':consForms}
+    return render(request,"app/PatconsultationForms_List.html",context)

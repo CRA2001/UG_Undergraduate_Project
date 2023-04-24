@@ -30,5 +30,8 @@ urlpatterns = [
     path('updateStaff/<str:pk>',views.updateStaff,name='updateStaff'),
     path('patConsult1/',views.patientConsultationPg1,name='patient_consult_pg1'),
     path('patConsult2/<int:pk>/',views.patientConsultationPg2,name='patient_consult_pg2'),
-    path('patConsultSuccess/<int:consultation_id>/',views.patientConsultationSuccess,name='patient_consult_success'),    path('admin/',admin.site.urls)
+    path('patConsultSuccess/<int:consultation_id>/',views.patientConsultationSuccess,name='patient_consult_success'),
+    path('patient/<int:pk>/', views.patient_detail, name='patient_detail'),    
+    path('PatConsult_forms/',views.consultation_list,name='consultations_list'),
+    path('admin/',admin.site.urls)
 ]
