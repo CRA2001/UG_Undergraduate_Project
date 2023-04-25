@@ -2,7 +2,6 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.http import FileResponse
 import io
 from .models import Patients, DrugsPharmacy, TestResult, Consultations
-from django.contrib.auth import get_user
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
@@ -17,10 +16,13 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import get_user_model
 from django.db.models import Q
 
+#Login page
 def loginPage(request):
     page = 'login'
+    #if login is sucssessful go to the mainpage
     if request.user.is_authenticated:
-        return redirect('mainpage')   
+        return redirect('mainpage')
+    # a POST http method is sent via request 
     if request.method == 'POST':
         username = request.POST.get('username')
         password = request.POST.get('password')
@@ -56,10 +58,13 @@ def index(request):
 
 #Patients
 
+#Display the list of patients
 @login_required(login_url='/login')
 def patientList(request):
+    #query for the searchbar 
     query = request.GET.get('q')
     if(query):
+        #filtering based on the search with is either the name, email or phone of a patient
         patients = Patients.objects.filter(
             Q(name__icontains=query) |
             Q(email__icontains=query) |
@@ -70,6 +75,7 @@ def patientList(request):
     context = {'patients':patients}
     return render(request,'app/patientList.html',context)
 
+#creating a new patient.
 @login_required(login_url='/login')    
 def createPatient(request):
     form = NewPatientForm()
@@ -80,7 +86,7 @@ def createPatient(request):
         return redirect('patientList')
     context = {'form':form}
     return render(request,'app/newpatient_form.html',context)
-
+#deleting a patient record
 @login_required(login_url='/login')    
 def deletePatients(request,pk):
     patient = Patients.objects.get(id=pk)
@@ -108,6 +114,8 @@ def staff(request):
     return render(request,'app/staff.html')
 
 #Pharmacy
+
+#Displaying the list of drugs and antibiotics etc, as well as allowing to search through them.
 @login_required(login_url='/login')
 def pharmacyStock(request):
     query = request.GET.get('q')
@@ -121,6 +129,7 @@ def pharmacyStock(request):
     context = {'drugs':drugs}
     return render(request,'app/pharmacyStock.html',context)
 
+#View for adding a new drug or antibiotic
 @login_required(login_url='/login')
 def createInv(request):
     form = PharmacyForm()
@@ -132,6 +141,7 @@ def createInv(request):
     context = {'form':form}
     return render(request,'app/stock_form.html',context)
 
+#updating the stock of the pharmacy item
 @login_required(login_url='/login')
 def updateInv(request,pk):
     drug = DrugsPharmacy.objects.get(id=pk)
@@ -154,7 +164,9 @@ def deleteInv(request,pk):
         return redirect('pharmacy')
     return render(request,'app/delete.html',{'obj':drug })
 
-#Create Test Results sections
+#Test Results section
+
+#Displaying the list of test results in the form of a list
 def test_results(request):
     test_results = TestResult.objects.all()
     return render(request, 'app/test_results.html', {'test_results': test_results})
@@ -169,6 +181,7 @@ def add_test_result(request):
         form = TestResultForm()
     return render(request, 'app/add_test_result.html', {'form': form})
 
+#Allowing the user to update the test results 
 def update_test_result(request, pk):
     test_result = get_object_or_404(TestResult, pk=pk)
     if request.method == 'POST':
@@ -180,13 +193,15 @@ def update_test_result(request, pk):
         form = TestResultForm(instance=test_result)
     return render(request, 'app/add_test_result.html', {'form': form})
 
+#Allowing the user to delete the test result
 def delete_test_result(request, pk):
-    result = TestResult.objects.get(id=pk)
+    result = TestResult.objects.get(id=pk) 
     if request.method == 'POST':
         result.delete()
         return redirect('test_results')
     return render(request,'app/delete.html',{'obj':result})
 
+#this class downloads the pdf of the medical image.
 class DownloadPDFView(View):
     def get(self, request, pk):
         test_result = get_object_or_404(TestResult, pk=pk)
@@ -200,13 +215,14 @@ class DownloadPDFView(View):
         response = FileResponse(buffer, content_type='application/pdf')
         response['Content-Disposition'] = f'attachment; filename="{test_result.patient_name,test_result.test_type}.pdf"'
         return response
-
+    
+#this will access all the users from the user model and output them all in the form of a list
 def staffManagement(request):
     users = get_user_model().objects.all()
     context = {'users':users}
     return render(request,'app/staffmanage.html',context)
 
-
+# this will add new staff
 @login_required(login_url='/login')    
 def addStaff(request):
     form = addStaffForm()
@@ -218,7 +234,7 @@ def addStaff(request):
     context = {'form':form}
     return render(request,'app/addStaff.html',context)
 
-
+#this will delete the staff 
 def deleteStaff(request,pk):
     staff = get_user_model().objects.get(id=pk)
     if request.method == 'POST':
@@ -226,6 +242,7 @@ def deleteStaff(request,pk):
         return redirect('staffManage')
     return render(request,'app/delete.html',{'obj':staff})
 
+#This updates the details of the staff listings
 def updateStaff(request,pk):
     user = get_user_model().objects.get(id=pk)
     initial_data = {'username':user.username,'email':user.email,'forename':user.first_name,'surname':user.last_name,'date':user.date_joined,'groups':user.groups.all()}
@@ -238,12 +255,14 @@ def updateStaff(request,pk):
     context = {'form':form}
     return render(request,'app/addStaff.html',context)
 
+#patientCconsultationPg1 refers to the first page of the consultation feature 
 def patientConsultationPg1(request):
     # query is used for the searchbar which will search based
     # on the id and the name of the search value inputted in 
     # the searchbar
     query = request.GET.get('q')
     if query:
+        # the search will pertain to the id or the name of the patient.
         patients = Patients.objects.filter(
             Q(id__icontains=query)|
             Q(name__icontains=query)
@@ -254,6 +273,7 @@ def patientConsultationPg1(request):
     context = {'patients':patients}
     return render(request,'app/patConsult1.html',context)
 
+#patientConsultationPg2 refers to the second page of the consultation feature
 def patientConsultationPg2(request, pk):
     patient = Patients.objects.get(id=pk)
     if request.method == 'POST':
@@ -280,13 +300,14 @@ def patientConsultationPg2(request, pk):
     }
     return render(request,'app/patConsult2_form.html',context)
 
-
+# This view will displays a success screen which indicates that the form has been successfully filled out
 def patientConsultationSuccess(request, consultation_id):
     consultation = Consultations.objects.get(id=consultation_id)
     context = {
         'consultation': consultation
     }
     return render(request, 'app/patConsult_success.html', context)
+
 
 def patient_detail(request, pk):
     patient = get_object_or_404(Patients, id=pk)
@@ -298,6 +319,7 @@ def patient_detail(request, pk):
     }
     return render(request, 'app/patient_detail.html', context)
 
+#consultation_list refers to the list of consultation forms
 def consultation_list(request):
     consForms = Consultations.objects.all()
     context= {'Consultations':consForms}
