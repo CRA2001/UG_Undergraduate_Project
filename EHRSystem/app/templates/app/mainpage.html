@@ -23,7 +23,7 @@
                 {% if group.name == 'admin'%}
                 <a class="menu_btn" href="{% url 'staffManage' %}">Staff Account Management</a>
                 <a class="menu_btn" href="{% url 'patientList'%}">Patient Lists</a>
-
+                
                 {% endif %}
                 {% if group.name == 'jr_doctors'%}
                 <a class="menu_btn" href="{% url 'patient_consult_pg1' %}">Patient Consultation</a>

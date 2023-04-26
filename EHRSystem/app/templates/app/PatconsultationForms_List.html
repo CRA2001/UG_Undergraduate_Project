@@ -1,0 +1,42 @@
+{% extends 'index.html' %}
+{% block content %}
+<div class="container">
+    <h2>Consultation Form</h2>
+    <div class="row">
+        <div class="col">
+            <p>Consulation ID</p>
+        </div>
+        <<div class="col">
+            <p>Patient Name</p>
+        </div>
+        <div class="col">
+            <p>Doctor</p>
+        </div>
+        <div class="col">
+            <p>Date Created</p>
+        </div>
+        <div class="col">
+
+        </div>
+    </div>
+    {% for form in Consultations %}
+    <div class="row">
+        <div class=col>
+            {{form.id}}
+        </div>
+        <div class="col">
+            {{form.patient}}
+        </div>
+        <div class="col">
+            {{form.doctor}}
+        </div>
+        <div class="col">
+            {{form.date_created}}
+        </div>
+        <div class="col">
+            <a href="{% url 'consultation_detail' form.id %}">View Form</a>
+        </div>
+    </div>
+    {% endfor %}
+</div>    
+{% endblock content %}

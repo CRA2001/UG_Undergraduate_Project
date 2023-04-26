@@ -13,6 +13,9 @@
         <!-- column titles -->
         <div class="row">
             <div class="col col-title">
+                <h4>ID</h4>
+            </div>
+            <div class="col col-title">
                 <h4>Name</h4>
             </div>
             <div class="col col-title">
@@ -28,7 +31,7 @@
                 <h4>D.O.B</h4>
             </div>
             <div class="col col-title">
-                <h4>Ethnicity</h4>
+                <h4>Nationality</h4>
             </div>
             <div class="col col-title">
                 <h4>Medical History</h4>
@@ -38,6 +41,9 @@
         <!-- Values of the patients -->
         {% for patient in patients %}
             <div class="row">
+                <div class="col">
+                    <p class="patient_attr">{{patient.id}}</p>
+                </div>
                 <div class="col">
                     <p class="patient_attr">{{patient.name}}</p>
                 </div>
@@ -54,11 +60,12 @@
                     <p class="patient_attr">{{patient.date_of_birth}}</p>
                 </div>
                 <div class="col">
-                    <p class="patient_attr">{{patient.ethnicity}}</p>
+                    <p class="patient_attr">{{patient.nationality}}</p>
                 </div>
                 <!-- Button which opens the medical history of the patient -->
                 <div class="col text-center">
-                    <a class="viewMedHist_btn" href="{% url 'viewMedHist' patient.id %}">See History</a>
+                    <a class="viewMedHist_btn" href="{% url 'viewMedHist' patient.id %}">View</a>
+                    
                 </div>
                 <!-- Button which deletes all records of the patient -->
                 <div class="col">

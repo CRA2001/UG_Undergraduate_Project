@@ -33,5 +33,6 @@ urlpatterns = [
     path('patConsultSuccess/<int:consultation_id>/',views.patientConsultationSuccess,name='patient_consult_success'),
     path('patient/<int:pk>/', views.patient_detail, name='patient_detail'),    
     path('PatConsult_forms/',views.consultation_list,name='consultations_list'),
+    path('consultation/<int:id>/', views.consultation_detail, name='consultation_detail'),
     path('admin/',admin.site.urls)
 ]

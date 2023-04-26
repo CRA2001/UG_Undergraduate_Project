@@ -1,9 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import User
-from django.utils import timezone
 from django.contrib.auth.models import AbstractUser, Group, Permission
-
-from django.contrib.auth import get_user_model
 class User(AbstractUser):
     group = models.CharField(max_length=100, blank=True, null=True)
     groups = models.ManyToManyField(
@@ -26,30 +22,38 @@ class Patients(models.Model):
         ('F', 'Female'),
         ('O', 'Other')
     ]
+    BLOOD_TYPE_CHOICES = [ 
+        ('A+', 'A+'),
+        ('A-', 'A-'),    
+        ('B+', 'B+'),    
+        ('B-', 'B-'),    
+        ('AB+', 'AB+'),    
+        ('AB-', 'AB-'),    
+        ('O+', 'O+'),    
+        ('O-', 'O-')
+        ] 
+
     
     name = models.CharField(max_length=255)
     sex = models.CharField(max_length=1, choices=SEX_CHOICES)
     email = models.EmailField()
     phone = models.CharField(max_length=20)
     date_of_birth = models.DateField()
-    ethnicity = models.CharField(max_length=255)
-    blood_group = models.CharField(max_length=10)
+    nationality = models.CharField(max_length=255)
+    blood_group = models.CharField(max_length=3,choices=BLOOD_TYPE_CHOICES)
     allergies = models.TextField(blank=True)
-    medicalHist_conditions = models.TextField(blank=True)
-    medicalHist_pastSurgery = models.TextField(blank=True)
-    medicalHist_mental = models.TextField(blank=True)
-    medicalHist_medication = models.TextField(blank=True)
-    medicalHist_sexual = models.TextField(blank=True)
+    Medical_Surgical_History = models.TextField(blank=True)
+
 
     def __str__(self):
-        return f"{self.name} (ID: {self.pk})"
+        return f"{self.name}"
+    
 class DrugsPharmacy(models.Model):
 
     drug_name = models.CharField(max_length=100)
     purpose = models.CharField(max_length=500)
     expiry_date = models.DateField()
     stock = models.IntegerField()
-
 
     def __str__(self):
         return f"{self.drug_name} (ID: {self.pk})"
@@ -67,14 +71,13 @@ class TestResult(models.Model):
         ('MRI', 'MRI'),
         ('XRAY', 'X-Ray')
     ]
-    patient_name = models.CharField(max_length=255)
-    patient_gender = models.CharField(max_length=10, choices=PATIENT_GENDER_CHOICES)
+    patient = models.ForeignKey(Patients, on_delete=models.CASCADE)
     test_type = models.CharField(max_length=10, choices=TEST_TYPE_CHOICES)
     lab_result_notes = models.TextField()
     medical_image = models.FileField(upload_to='test_results/')
     def __str__(self):
-        return self.patient_name
-
+        return f"{self.patient.name} ({self.patient.pk})"
+    
 class Consultations(models.Model):
     patient = models.ForeignKey(Patients, on_delete=models.CASCADE)
     doctor = models.CharField(max_length=255)
@@ -85,6 +88,8 @@ class Consultations(models.Model):
     visual_exam = models.TextField(blank=True)
     physical_exam = models.TextField(blank=True)
     other_notes = models.TextField(blank=True)
+    symptoms = models.TextField(blank=True)
+    diagnosis = models.TextField(blank=True)
     date_created = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

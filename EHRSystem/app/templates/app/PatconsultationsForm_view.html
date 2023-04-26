@@ -1,0 +1,65 @@
+{% extends 'index.html' %}
+
+{% block content %}
+<div class="container">
+    <h2>Consultation Details</h2>
+    <table class="table">
+        <tr>
+            <th>Consultation ID</th>
+            <td>{{ consultation.id }}</td>
+        </tr>
+        <tr>
+            <th>Patient ID</th>
+            <td>{{consultation.patient.id}}</td>
+        </tr>
+        <tr>
+            <th>Patient Name</th>
+            <td>{{ consultation.patient }}</td>
+        </tr>
+        <tr>
+            <th>Doctor</th>
+            <td>{{ consultation.doctor }}</td>
+        </tr>
+        <tr>
+            <th>Blood Pressure</th>
+            <td>{{ consultation.blood_pressure }}</td>
+        </tr>
+        <tr>
+            <th>Temperature</th>
+            <td>{{ consultation.temperature }}</td>
+        </tr>
+        <tr>
+            <th>Weight</th>
+            <td>{{ consultation.weight }}</td>
+        </tr>
+        <tr>
+            <th>Height</th>
+            <td>{{ consultation.height }}</td>
+        </tr>
+        <tr>
+            <th>Visual Exam</th>
+            <td>{{ consultation.visual_exam }}</td>
+        </tr>
+        <tr>
+            <th>Physical Exam</th>
+            <td>{{ consultation.physical_exam }}</td>
+        </tr>
+        <tr>
+            <th>Other Notes</th>
+            <td>{{ consultation.other_notes }}</td>
+        </tr>
+        <tr>
+            <th>Symptoms</th>
+            <td>{{ consultation.symptoms }}</td>
+        </tr>
+        <tr>
+            <th>Diagnosis</th>
+            <td>{{ consultation.diagnosis }}</td>
+        </tr>
+        <tr>
+            <th>Date Created</th>
+            <td>{{ consultation.date_created }}</td>
+        </tr>
+    </table>
+</div>
+{% endblock %}

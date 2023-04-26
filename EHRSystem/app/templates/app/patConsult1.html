@@ -7,11 +7,34 @@
             <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
         </form>
     </div>
+    <div class="row">
+        <div class="col-2"> 
+            <p>Patient ID</p>
+        </div>
+        <div class="col">
+            <p>Patient name</p>
+        </div>
+        <div class="col-1">
+
+        </div>
+    </div>
     {% for patient in patients %}
     <div class="row">
+        <div class="col-2">
+            <p>{{patient.id}}</p>
+        </div>
+        <div class="col">
+            <p>{{patient.name}}</p>
+        </div>
+        <div class="col-1">
+            <a class="addPatient_btn" href="{% url 'patient_consult_pg2'  patient.id %}"> Proceed</a>
+        </div>
+    </div>
+    <!-- <div class="row">
+
         <p style="padding-right: 2%;">{{patient.id}} | {{patient.name}}</p>
         <a href="{% url 'patient_consult_pg2'  patient.id %}"> Consultation Form</a>
-    </div>
+    </div> -->
     {% endfor %}
 </div>
 {% endblock content %}

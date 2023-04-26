@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.http import FileResponse
 import io
 from .models import Patients, DrugsPharmacy, TestResult, Consultations
+from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
@@ -15,6 +16,10 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from django.contrib.auth import get_user_model
 from django.db.models import Q
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import Group
+from .forms import CustomUserCreationForm
+
 
 #Login page
 def loginPage(request):
@@ -47,8 +52,19 @@ def logoutUser(request):
 
 
 def registerUser(request):
-    page = 'register'
-    return  render(request,'app/login_register.html')
+    if request.method == 'POST':
+        form = CustomUserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            group_name = form.cleaned_data.get('group')
+            if group_name:
+                group = Group.objects.get(name=group_name)
+                user.groups.add(group)
+            messages.success(request, 'Account created successfully!')
+            return redirect('login')
+    else:
+        form = CustomUserCreationForm()
+    return render(request, 'app/register.html', {'form': form})
 
 
 
@@ -168,7 +184,14 @@ def deleteInv(request,pk):
 
 #Displaying the list of test results in the form of a list
 def test_results(request):
-    test_results = TestResult.objects.all()
+    query=request.GET.get('q')
+    if(query):
+        test_results= TestResult.objects.filter(
+            Q(test_type__icontains=query) |
+            Q(patient__name__icontains=query)
+        )
+    else:
+        test_results = TestResult.objects.all()
     return render(request, 'app/test_results.html', {'test_results': test_results})
 
 def add_test_result(request):
@@ -324,3 +347,10 @@ def consultation_list(request):
     consForms = Consultations.objects.all()
     context= {'Consultations':consForms}
     return render(request,"app/PatconsultationForms_List.html",context)
+
+def consultation_detail(request, id):
+    consultation = get_object_or_404(Consultations, id=id)
+    context = {
+        'consultation': consultation
+    }
+    return render(request, 'app/PatconsultationsForm_view.html', context)
