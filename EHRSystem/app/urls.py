@@ -25,7 +25,6 @@ urlpatterns = [
     path('delete_test_result/<int:pk>/', views.delete_test_result, name='delete_test_result'),
     path('test_results/<int:pk>/download_pdf/', views.DownloadPDFView.as_view(), name='download_pdf'),
     path('staffManage/',views.staffManagement,name="staffManage"),
-    path('addStaff/',views.addStaff,name='addStaff'),
     path('deleteStaff/<str:pk>',views.deleteStaff,name='deleteStaff'),
     path('updateStaff/<str:pk>',views.updateStaff,name='updateStaff'),
     path('patConsult1/',views.patientConsultationPg1,name='patient_consult_pg1'),

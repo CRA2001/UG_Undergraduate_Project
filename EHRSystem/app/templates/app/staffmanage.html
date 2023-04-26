@@ -1,7 +1,8 @@
 {% extends 'index.html' %}
 {% block content %}
+    <div class="container">
         <h1 class="display-5" style="text-align: center;"> Staff Management</h1>
-        <a href="{% url 'addStaff' %}">Add Staff</a>
+        <a class="addPatient_btn"href="{% url 'register' %}">Add Staff</a>
         <div class="row">   
             <div class="col">
                 <h3>Username</h3>
